@@ -1,5 +1,8 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
+import { IgxSpreadsheetComponent } from 'igniteui-angular-spreadsheet';
+import { ExcelUtility } from './e';
+// import { ExcelUtility } from 'ExcelUtility';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +20,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {}
+  @ViewChild("spreadsheet", { read: IgxSpreadsheetComponent })
+public spreadsheet!: IgxSpreadsheetComponent;
+
+  ngOnInit() {
+
+    
+    const excelFile = '../assets/Capital Gains - Mutual Funds-groww.xlsx';
+    ExcelUtility.loadFromUrl(excelFile).then((w) => {
+      this.spreadsheet.workbook = w;
+    });
+  }
   errorMessage: any = '';
   ngAfterViewInit() {
     this.errorMessage = 'in ngAfterViewInit';
@@ -56,6 +69,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.mainObj.isWebOtpSupported = false;
       this.errorMessage = 'out of otp window';
     }
+
   }
   myOTP: any;
   mainObj: any = {};
