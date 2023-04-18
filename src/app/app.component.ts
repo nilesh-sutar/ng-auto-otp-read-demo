@@ -1,8 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
-import { IgxSpreadsheetComponent } from 'igniteui-angular-spreadsheet';
-import { ExcelUtility } from './e';
-// import { ExcelUtility } from 'ExcelUtility';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +7,7 @@ import { ExcelUtility } from './e';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, AfterViewInit {
+
   title = 'ng-otp-auto-read';
   constructor(private readonly updates: SwUpdate) {
     if (this.updates.isEnabled) {
@@ -20,16 +18,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  @ViewChild("spreadsheet", { read: IgxSpreadsheetComponent })
-public spreadsheet!: IgxSpreadsheetComponent;
-
   ngOnInit() {
 
-    
-    const excelFile = '../assets/Capital Gains - Mutual Funds-groww.xlsx';
-    ExcelUtility.loadFromUrl(excelFile).then((w) => {
-      this.spreadsheet.workbook = w;
-    });
   }
   errorMessage: any = '';
   ngAfterViewInit() {
